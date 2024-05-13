@@ -1,16 +1,48 @@
-name: actions
-run-name: TiilS is running TPLab04
-on: [push]
+name: Lab
+on: push
 jobs:
-  container-job:
-    runs-on: macos-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-      - name: Cache dependencies
-        uses: actions/cache@v2
-        with:
-          path: /Users/main/TiilS/workspace/projects/lab04 
-          key: ${{ runner.os }}-dependencies-${{ hashFiles('**/lockfiles') }}
-      - name: Test project
-        run: ./.github/workflows/test.sh
+    build-project:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+            
+            - name: formater_lib
+              run: |
+                cd ${{ github.workspace }}/formatter_lib/
+                rm -rf build
+                mkdir build && cd build
+                cmake ..
+                cmake --build .
+
+            - name: formater_ex_lib
+              run: |
+                cd ${{ github.workspace }}/formatter_ex_lib/
+                rm -rf build
+                mkdir build && cd build
+                cmake ..
+                cmake --build .
+
+            - name: hello_world
+              run: |
+                cd ${{ github.workspace }}/hello_world_application/
+                rm -rf build
+                mkdir build && cd build
+                cmake ..
+                cmake --build .
+
+            - name: solver_lib
+              run: |
+                cd ${{ github.workspace }}/solver_lib/
+                rm -rf build
+                mkdir build && cd build
+                cmake ..
+                cmake --build .
+
+            - name: solver_application
+              run: |
+                cd ${{ github.workspace }}/solver_application/
+                rm -rf build
+                mkdir build && cd build
+                cmake ..
+                cmake --build .
